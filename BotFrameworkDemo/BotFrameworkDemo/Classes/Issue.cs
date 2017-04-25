@@ -21,38 +21,40 @@ namespace JiraSimulation
 
 
         #region Form Dialog
-        //public static IForm<Issue> MakeForm()
-        //{
-        //    FormBuilder<Issue> order = new FormBuilder<Issue>();
-        //    return order
-        //        .Message("Enter the issue fields")
-        //        .Field(nameof(IssueCode), validate: IssueCodeValidator)
-        //        .Field(nameof(Title))
-        //        .AddRemainingFields()
-        //        .OnCompletion(async(session,issue)=> 
-        //        {
-        //            JiraSimulationManager.GetInstance().AddIssue(issue);
-        //        })
-        //            .Message("Thank you, I have submitted your message.")
-        //            .Build();
-        //}
+        public static IForm<Issue> MakeForm()
+        {
+            FormBuilder<Issue> order = new FormBuilder<Issue>();
+            return order
+                .Message("Enter the issue fields")
+                .AddRemainingFields()
+                .Build();
+                //.Field(nameof(IssueCode), validate: IssueCodeValidator)
+                //.Field(nameof(Title))
+                //.AddRemainingFields()
+                //.OnCompletion(async (session, issue) =>
+                //{
+                //    JiraSimulationManager.GetInstance().AddIssue(issue);
+                //})
+                //    .Message("Thank you, I have submitted your message.")
+                //    .Build();
+        }
 
-        //private static ValidateAsyncDelegate<Issue> IssueCodeValidator = async (state, response) =>
-        //{
-        //    var result = new ValidateResult { IsValid = true, Value = response };
-        //    if (JiraSimulationManager.GetInstance().ValidateIssueCode(response as string))
-        //    {
-        //        result.Feedback = string.Format(@"ok");
-        //        result.IsValid = true;
-        //    }
-        //    else
-        //    {
-        //        result.Feedback = string.Format(@"This issueCode is already included.");
-        //        result.IsValid = false;
-        //    }
+        private static ValidateAsyncDelegate<Issue> IssueCodeValidator = async (state, response) =>
+        {
+            var result = new ValidateResult { IsValid = true, Value = response };
+            if (JiraSimulationManager.GetInstance().ValidateIssueCode(response as string))
+            {
+                result.Feedback = string.Format(@"ok");
+                result.IsValid = true;
+            }
+            else
+            {
+                result.Feedback = string.Format(@"This issueCode is already included.");
+                result.IsValid = false;
+            }
 
-        //    return await Task.FromResult(result);
-        //}; 
+            return await Task.FromResult(result);
+        };
         #endregion
     }
 
