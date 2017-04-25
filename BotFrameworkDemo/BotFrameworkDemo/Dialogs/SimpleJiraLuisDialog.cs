@@ -88,10 +88,10 @@ namespace BotFrameworkDemo.Dialogs
         [LuisIntent("Insert")]
         public async Task Insert(IDialogContext context, LuisResult result)
         {
-           // await context.PostAsync("Adding New Issue");
-           await FormDialog.FromForm(Issue.MakeForm).StartAsync(context);
+          await context.PostAsync("Adding New Issue");
+          await  FormDialog.FromForm(Issue.MakeForm).StartAsync(context);
             
-          // context.Wait(MessageReceived);
+        //  context.Wait(MessageReceived);
 
         }
 
