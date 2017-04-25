@@ -1,5 +1,6 @@
 ﻿using JiraSimulation;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
@@ -84,7 +85,15 @@ namespace BotFrameworkDemo.Dialogs
             //  context.Wait(MessageReceived);
         }
 
+        [LuisIntent("Insert")]
+        public async Task Insert(IDialogContext context, LuisResult result)
+        {
+           // await context.PostAsync("Adding New Issue");
+           await FormDialog.FromForm(Issue.MakeForm).StartAsync(context);
+            
+          // context.Wait(MessageReceived);
 
+        }
 
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)

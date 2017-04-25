@@ -26,16 +26,17 @@ namespace JiraSimulation
             FormBuilder<Issue> order = new FormBuilder<Issue>();
             return order
                 .Message("Enter the issue fields")
-                .AddRemainingFields()
+                .AddRemainingFields()                
+                .OnCompletion(async (session, issue) =>
+                {
+                    JiraSimulationManager.GetInstance().AddIssue(issue);
+                })
+                    .Message("Thank you, I have submitted your issue.")
                 .Build();
                 //.Field(nameof(IssueCode), validate: IssueCodeValidator)
                 //.Field(nameof(Title))
                 //.AddRemainingFields()
-                //.OnCompletion(async (session, issue) =>
-                //{
-                //    JiraSimulationManager.GetInstance().AddIssue(issue);
-                //})
-                //    .Message("Thank you, I have submitted your message.")
+                
                 //    .Build();
         }
 
