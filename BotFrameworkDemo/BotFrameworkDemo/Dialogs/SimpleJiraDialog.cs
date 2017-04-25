@@ -64,29 +64,29 @@ namespace BotFrameworkDemo.Dialogs
             {
 
                 #region Choice
-                //List<string> issues = JiraSimulationManager.GetInstance().GetIssues().Select(i=> $"[{i.IssueCode}] {i.Title}").ToList()  ;
-                //PromptOptions<string> options = new PromptOptions<string>("Select issue to remove.",
-                //    "Sorry please try again", "ok, never mind..", issues, 2);
-                //PromptDialog.Choice<string>(context, RemoveIssueAsync, options);
+                List<string> issues = JiraSimulationManager.GetInstance().GetIssues().Select(i => $"[{i.IssueCode}] {i.Title}").ToList();
+                PromptOptions<string> options = new PromptOptions<string>("Select issue to remove.",
+                    "Sorry please try again", "ok, never mind..", issues, 2);
+                PromptDialog.Choice<string>(context, RemoveIssueAsync, options);
 
 
                 #endregion
 
-                if (_currentIssue == null)
-                    await context.PostAsync("There is not a selected Issue");
-                else
-                {
-                    ////Consfirm
-                    //PromptDialog.Confirm(context, RemoveIssueAsync, $"Are you sure you want to Delete {_currentIssue.IssueCode}?");
+                //if (_currentIssue == null)
+                //    await context.PostAsync("There is not a selected Issue");
+                //else
+                //{
+                //    ////Consfirm
+                //    PromptDialog.Confirm(context, RemoveIssueAsync, $"Are you sure you want to Delete {_currentIssue.IssueCode}?");
 
-                    bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(this._currentIssue.IssueCode);
-                    if (removeResult)
-                        await context.PostAsync($"Issue[{this._currentIssue.IssueCode}] removed successfully.");
-                    else
-                        await context.PostAsync($"Cannot remove Issue[{this._currentIssue.IssueCode}].");
+                //    //bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(this._currentIssue.IssueCode);
+                //    //if (removeResult)
+                //    //    await context.PostAsync($"Issue[{this._currentIssue.IssueCode}] removed successfully.");
+                //    //else
+                //    //    await context.PostAsync($"Cannot remove Issue[{this._currentIssue.IssueCode}].");
 
-                }
-                context.Wait(MessageReceivedAsync);
+                //}
+                //context.Wait(MessageReceivedAsync);
 
             }
             else
@@ -97,38 +97,38 @@ namespace BotFrameworkDemo.Dialogs
             }
         }
         #region Confirm
-        ///Confirm
-        //private async Task RemoveIssueAsync(IDialogContext context, IAwaitable<bool> result)
-        //{
-        //    if (await result)
-        //    {
-        //        bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(this._currentIssue.IssueCode);
-        //        if (removeResult)
-        //            await context.PostAsync($"Issue[{this._currentIssue.IssueCode}] removed successfully.");
-        //        else
-        //            await context.PostAsync($"Cannot remove Issue[{this._currentIssue.IssueCode}].");
-        //    }
-        //    else
-        //    {
-        //        await context.PostAsync($"Operation Cancelled");
-        //    }
-        //  //  context.Wait(MessageReceivedAsync);
-        //} 
+        //Confirm
+        private async Task RemoveIssueAsync(IDialogContext context, IAwaitable<bool> result)
+        {
+            if (await result)
+            {
+                bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(this._currentIssue.IssueCode);
+                if (removeResult)
+                    await context.PostAsync($"Issue[{this._currentIssue.IssueCode}] removed successfully.");
+                else
+                    await context.PostAsync($"Cannot remove Issue[{this._currentIssue.IssueCode}].");
+            }
+            else
+            {
+                await context.PostAsync($"Operation Cancelled");
+            }
+            //  context.Wait(MessageReceivedAsync);
+        }
         #endregion
 
 
         #region Choice
-        //private async Task RemoveIssueAsync(IDialogContext context, IAwaitable<string> result)
-        //{
-        //    string selection = await result;
-        //    string issueCode = selection.Split('[',']')[1];
-        //    bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(issueCode);
-        //    if (removeResult)
-        //        await context.PostAsync($"Issue[{issueCode}] removed successfully.");
-        //    else
-        //        await context.PostAsync($"Cannot remove Issue[{issueCode}].");
-        //    context.Wait(MessageReceivedAsync);
-        //} 
+        private async Task RemoveIssueAsync(IDialogContext context, IAwaitable<string> result)
+        {
+            string selection = await result;
+            string issueCode = selection.Split('[', ']')[1];
+            bool removeResult = JiraSimulationManager.GetInstance().RemoveIssue(issueCode);
+            if (removeResult)
+                await context.PostAsync($"Issue[{issueCode}] removed successfully.");
+            else
+                await context.PostAsync($"Cannot remove Issue[{issueCode}].");
+            context.Wait(MessageReceivedAsync);
+        }
         #endregion
     }
 }
